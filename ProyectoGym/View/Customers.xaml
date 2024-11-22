@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Page_Navigation_App.View.Customers"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:Page_Navigation_App.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="1300"
+             Style="{StaticResource Page_Style}">
+
+    <UserControl.DataContext>
+        <vm:CustomerVM />
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Botón Nuevo -->
+        <Button Style="{StaticResource FloatingButtonStyle}" 
+                Content="+" 
+                Click="btnNew" RenderTransformOrigin="0.53,0.643" Margin="0,0,26,10" Grid.Row="1" />
+
+        <!-- DataGrid Modernizado -->
+        <DataGrid Name="dg" IsReadOnly="True" AutoGenerateColumns="false" Grid.Column="0" Grid.Row="1"
+                  Background="{x:Null}" Foreground="White" RowBackground="#1F1F1F" AlternatingRowBackground="#292929"
+                  BorderBrush="{x:Null}" BorderThickness="1" 
+                  HorizontalGridLinesBrush="#444" VerticalGridLinesBrush="#444"
+                  ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeaderStyle}"
+                  RowStyle="{StaticResource ModernDataGridRowStyle}" Margin="0,0,10,75">
+
+            <!-- Columnas -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Fecha de Nacimiento" Binding="{Binding FechaNacimiento, StringFormat='dd/MM/yyyy'}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Sexo" Binding="{Binding Sexo}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Membresía" Binding="{Binding Membresia}" Width="*"></DataGridTextColumn>
+
+                <!-- Botones personalizados -->
+                <DataGridTemplateColumn Header="Acciones" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <Button CommandParameter="{Binding Id}" Click="btnUpdate" Content="✎ Editar"
+                                        Style="{StaticResource ModernButtonStyle}" />
+                                <Button CommandParameter="{Binding Id}" Click="btnDelete" Content="🗑 Eliminar"
+                                        Style="{StaticResource ModernButtonStyle}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
